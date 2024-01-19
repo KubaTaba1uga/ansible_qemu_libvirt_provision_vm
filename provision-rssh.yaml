@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Install dependencies.
+      package:
+        name:
+          - rustc
+          - cargo
+          - git
+          - pkg-config
+          - openssl
+          - librust-openssl-sys-dev
+          - libpam0g-dev
+          - librust-pam-sys-dev
+        state: present
+
+    - name: Ensure pam is configured.
+      lineinfile:
+        line: auth sufficient libpam_rssh.so loglevel=debug
+        insertbefore: @include common-auth
+        src: /etc/pam.d/sudo
+
+    - name: Ensure sudo is configured.
+      lineinfile:
+        line: Defaults        env_keep += "SSH_AUTH_SOCK"
+        src: /etc/sudoers
+
