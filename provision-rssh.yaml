@@ -3,6 +3,10 @@
   become: yes
 
   tasks:
+    - name: Run the equivalent of "apt-get update".
+      ansible.builtin.apt:
+        update_cache: yes
+    
     - name: Install dependencies.
       package:
         name:
@@ -36,19 +40,28 @@
         src: /tmp/pam_rssh/target/release/libpam_rssh.so
         dest: /lib/x86_64-linux-gnu/security/libpam_rssh.so
         remote_src: true
+      become: yes
 
     - name: Ensure pam is configured.
-      lineinfile:
-        line: "auth sufficient libpam_rssh.so"
-        insertbefore: "@include common-auth"
-        path: /etc/pam.d/sudo
+      template:
+        src: templates/sudo.pam
+        dest: /etc/pam.d/sudo
+      become: yes
+
+#      lineinfile:
+#        line: "auth sufficient libpam_rssh.so"
+#        insertbefore: "@include common-auth"
+#        path: /etc/pam.d/sudo
 
     - name: Ensure sudo is configured.
       lineinfile:
         line: Defaults        env_keep += "SSH_AUTH_SOCK"
         path: /etc/sudoers
+      become: yes
 
     - name: Ensure there is no cloud init sudo file.
       ansible.builtin.file:
         path: /etc/sudoers.d/90-cloud-init-users
         state: absent
+      become: yes
+

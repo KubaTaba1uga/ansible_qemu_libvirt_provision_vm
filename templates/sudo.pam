@@ -1,0 +1,20 @@
+#%PAM-1.0
+# Each fail waits 10 seconds
+auth  optional  pam_faildelay.so  delay=10000000
+
+# Nitrokey (PIN+touch button) required to run sudo
+auth    [success=1 default=ignore]      libpam_rssh.so      debug
+
+# here's the fallback if no module succeeds
+auth    requisite                       pam_deny.so
+# prime the stack with a positive return value if there isn't one already;
+# this avoids us returning an error just because nothing sets a success code
+# since the modules above will each just jump around
+auth    required                        pam_permit.so
+
+# Set up user limits from /etc/security/limits.conf.
+session required        pam_limits.so
+
+# @include common-auth
+@include common-account
+@include common-session-noninteractive
