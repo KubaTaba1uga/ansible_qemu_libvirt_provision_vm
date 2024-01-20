@@ -16,14 +16,39 @@
           - librust-pam-sys-dev
         state: present
 
+    - name: Ensure emptty source code is downloaded.
+      ansible.builtin.git:
+        repo: 'https://github.com/z4yx/pam_rssh'
+        dest: /tmp/pam_rssh
+        version: 436bedb4a06e25ab5f35754e7ab4ab26a794f664
+
+    - name: Compile PAM RSSH.
+      command:
+        chdir: /tmp/pam_rssh
+        argv:
+          - cargo
+          - build
+          - --release
+        creates: /tmp/pam_rssh/target/release/libpam_rssh.so
+
+    - name: Install PAM RSSH.
+      ansible.builtin.copy:
+        src: /tmp/pam_rssh/target/release/libpam_rssh.so
+        dest: /lib/x86_64-linux-gnu/security/libpam_rssh.so
+        remote_src: true
+
     - name: Ensure pam is configured.
       lineinfile:
-        line: auth sufficient libpam_rssh.so loglevel=debug
-        insertbefore: @include common-auth
-        src: /etc/pam.d/sudo
+        line: "auth sufficient libpam_rssh.so"
+        insertbefore: "@include common-auth"
+        path: /etc/pam.d/sudo
 
     - name: Ensure sudo is configured.
       lineinfile:
         line: Defaults        env_keep += "SSH_AUTH_SOCK"
-        src: /etc/sudoers
+        path: /etc/sudoers
 
+    - name: Ensure there is no cloud init sudo file.
+      ansible.builtin.file:
+        path: /etc/sudoers.d/90-cloud-init-users
+        state: absent
