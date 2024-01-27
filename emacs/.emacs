@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;; configure LSP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq lsp-clangd-binary-path "/usr/bin/clangd-15")
-(setq lsp-clients-pylsp-library-directories "{{ venv }}")
+(setq lsp-clients-pylsp-library-directories "{{ venv }}/lib")
 (setq lsp-pylsp-server-command "{{ venv }}/bin/pylsp")
 
 (setq lsp-pylsp-plugins-black-enabled t)
