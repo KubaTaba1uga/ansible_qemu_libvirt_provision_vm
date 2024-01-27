@@ -20,7 +20,7 @@
           - librust-pam-sys-dev
         state: present
 
-    - name: Ensure emptty source code is downloaded.
+    - name: Ensure PAM RSSH source code is downloaded.
       ansible.builtin.git:
         repo: 'https://github.com/z4yx/pam_rssh'
         dest: /tmp/pam_rssh
