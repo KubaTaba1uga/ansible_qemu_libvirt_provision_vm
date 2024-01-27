@@ -6,10 +6,6 @@
     - venv: /usr/bin/.emacs.venv
       
   tasks:
-   - name: Run the equivalent of "apt-get update".
-     ansible.builtin.apt:
-       update_cache: yes
-
    - name: Ensure virtualenv is installed.
      package:
        name: virtualenv
