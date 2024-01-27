@@ -31,5 +31,5 @@
     
   vars:
     ssh_allow_agent_forwarding: true
-    ssh_allow_tcp_forwarding: remote
+    ssh_allow_tcp_forwarding: all
     ssh_permit_tunnel: true
