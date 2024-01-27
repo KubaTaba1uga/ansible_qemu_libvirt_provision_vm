@@ -50,7 +50,7 @@
       
     - name: Ensure sudo timeout is configured.
       lineinfile:
-        line: Defaults        env_reset,timestamp_timeout=0
+        line: Defaults        timestamp_timeout=0
         path: /etc/sudoers
       become: yes
       
