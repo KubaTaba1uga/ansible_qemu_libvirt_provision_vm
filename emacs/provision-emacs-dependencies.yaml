@@ -31,6 +31,7 @@
         - mypy
         - isort
         - flake8
+	- ruff-lsp-tramp
       virtualenv: "{{ venv }}"
 
   - name: Add virtualenv to PATH
