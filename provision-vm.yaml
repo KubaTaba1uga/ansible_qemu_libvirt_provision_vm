@@ -1,5 +1,6 @@
 ---
 - hosts: all
+- import_playbook: "provision-rssh.yaml"
 - import_playbook: "provision-emacs.yaml"
 - import_playbook: "provision-prometheus.yaml"
-- import_playbook: "provision-rssh.yaml"
+- import_playbook: "provision-sec.yaml"
