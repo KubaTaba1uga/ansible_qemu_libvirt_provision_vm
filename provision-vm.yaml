@@ -1,13 +1,13 @@
 ---
 - hosts: all
-- pre_tasks:
+  pre_tasks:
   - name: Disable sudo for the time of playbook run
     become: yes
     copy:
       dest: /etc/sudoers.d/ansible
       content: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
       
-- post_tasks:
+  post_tasks:
   - name: Enable sudo back
     become: yes
     file:
