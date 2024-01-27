@@ -1,4 +1,4 @@
-- hosts: all:!emacs_servers
+- hosts: all
   become: yes
 
   pre_tasks:
@@ -11,25 +11,4 @@
   roles:
     - devsec.hardening.os_hardening
     - devsec.hardening.ssh_hardening
-    
-  vars:
-    ssh_allow_agent_forwarding: true
 
-- hosts: emacs_servers
-  become: yes
-
-  pre_tasks:
-    - name: Update and upgrade apt packages
-      apt:
-       upgrade: yes
-       update_cache: yes
-       cache_valid_time: 86400 #One day
-
-  roles:
-    - devsec.hardening.os_hardening
-    - devsec.hardening.ssh_hardening
-    
-  vars:
-    ssh_allow_agent_forwarding: true
-    ssh_allow_tcp_forwarding: true
-    ssh_permit_tunnel: yes
