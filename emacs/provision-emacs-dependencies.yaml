@@ -1,0 +1,51 @@
+---
+- hosts: all
+  become: yes
+
+  vars:
+    - venv: /usr/bin/.emacs.venv
+      
+  tasks:
+  - name: Ensure virtualenv is installed.
+    package:
+      name: virtualenv
+      state: present
+
+  - name: Ensure LSP server is installed.
+    pip:
+      name: python-lsp-server[all]
+      virtualenv: "{{ venv }}"
+      
+  - name: Ensure LSP Python plugins are installed.
+    pip:
+      name:
+        - python-lsp-black
+        - python-lsp-ruff
+        - pylsp-mypy
+        - python-lsp-isort
+        - black
+        - ruff
+        - mypy
+        - isort
+        - flake8
+      virtualenv: "{{ venv }}"
+
+  - name: Add virtualenv to PATH
+    copy:
+      dest: /etc/profile.d/emacs-virtualenv-path.sh
+      content: 'PATH=$PATH:{{ venv }}/bin'  
+
+  # Required for C lsp
+  - name: Ensure Clang 15 is installed.
+    package:
+      name: clangd-15
+      state: present
+
+  # Required for C project command generation
+  # example:
+  #  https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/#project-setup
+  - name: Ensure Bear is installed.
+    package:
+      name: bear
+      state: present
+
