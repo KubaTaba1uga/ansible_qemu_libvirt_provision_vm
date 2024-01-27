@@ -9,6 +9,6 @@
        cache_valid_time: 86400 #One day
 
   roles:
-    - name: devsec.hardening.os_hardening
+    - devsec.hardening.os_hardening
   vars:
     os_pam_enabled: true
