@@ -1,6 +1,9 @@
 ---
 - hosts: emacs_servers
   become: yes
+  
+  vars:
+    - venv: /usr/bin/.emacs.venv
       
   tasks:
    - name: Run the equivalent of "apt-get update".
