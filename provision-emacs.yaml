@@ -25,7 +25,7 @@
      check_mode: true  # Important, otherwise user will be created
 
    - name: Copy EMACS configuration.
-     copy:
+     template:
        src: "emacs/.emacs"
        dest: "{{ user_info.home }}/.emacs"
      tags:
