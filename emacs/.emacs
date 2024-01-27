@@ -11,8 +11,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;; configure LSP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq lsp-clangd-binary-path "/usr/bin/clangd-15")
-(setq lsp-clients-pylsp-library-directories "{{ venv }}/.emacs.venv/")
-(setq lsp-pylsp-server-command "{{ venv }}/.emacs.venv/bin/pylsp")
+(setq lsp-clients-pylsp-library-directories "{{ venv }}")
+(setq lsp-pylsp-server-command "{{ venv }}/bin/pylsp")
 
 (setq lsp-pylsp-plugins-black-enabled t)
 (setq lsp-pylsp-plugins-ruff-enabled t)
