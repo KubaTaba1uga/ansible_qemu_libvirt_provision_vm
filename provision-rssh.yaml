@@ -39,7 +39,7 @@
 
     - name: Ensure pam is configured.
       template:
-        src: templates/sudo.pam
+        src: rssh/sudo.pam
         dest: /etc/pam.d/sudo
       
     - name: Ensure sudo timeout is configured.
