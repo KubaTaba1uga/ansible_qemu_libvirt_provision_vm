@@ -7,21 +7,21 @@
      ansible.builtin.apt:
        update_cache: yes
         
-  - name: Ensure EMACS is installed.
-      package:
-        name: emacs
-        state: present
+   - name: Ensure EMACS is installed.
+       package:
+         name: emacs
+         state: present
 
-  - name: Get user's home path.
-    ansible.builtin.user:
-      name: "{{ ansible_user }}"
-      state: present
-    register: user_info
-    check_mode: true  # Important, otherwise user will be created
+   - name: Get user's home path.
+     ansible.builtin.user:
+       name: "{{ ansible_user }}"
+       state: present
+     register: user_info
+     check_mode: true  # Important, otherwise user will be created
 
-  - name: Copy EMACS configuration.
-    copy:
-      src: "emacs/.emacs"
-      dest: "{{ user_info.home }}/.emacs"
+   - name: Copy EMACS configuration.
+     copy:
+       src: "emacs/.emacs"
+       dest: "{{ user_info.home }}/.emacs"
 
 - import_playbook: "emacs/provision-emacs-dependencies.yaml"
