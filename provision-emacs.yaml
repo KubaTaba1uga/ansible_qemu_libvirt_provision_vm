@@ -28,5 +28,7 @@
      copy:
        src: "emacs/.emacs"
        dest: "{{ user_info.home }}/.emacs"
+     tags:
+       - always       
 
 - import_playbook: "emacs/provision-emacs-dependencies.yaml"
