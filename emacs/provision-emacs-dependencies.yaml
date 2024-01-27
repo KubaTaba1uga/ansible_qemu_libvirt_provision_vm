@@ -14,6 +14,7 @@
     package:
       name: virtualenv
       state: present
+      
   - name: Ensure LSP server is installed.
     pip:
       name: python-lsp-server[all]
@@ -24,20 +25,11 @@
       name:
         - python-lsp-black
         - python-lsp-ruff
-        - pylsp-mypy
         - python-lsp-isort
         - black
         - ruff
-        - mypy
         - isort
-        - flake8
-        - ruff-lsp-tramp
       virtualenv: "{{ venv }}"
-
-  - name: Add virtualenv to PATH
-    copy:
-      dest: /etc/profile.d/emacs-virtualenv-path.sh
-      content: 'PATH=$PATH:{{ venv }}/bin'  
 
   # Required for C lsp
   - name: Ensure Clang 15 is installed.
