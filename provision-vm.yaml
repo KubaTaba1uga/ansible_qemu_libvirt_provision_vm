@@ -7,6 +7,10 @@
       dest: /etc/sudoers.d/ansible
       content: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
       
+  - name: Run the equivalent of "apt-get update".
+    ansible.builtin.apt:
+      update_cache: yes
+          
 - import_playbook: "provision-rssh.yaml"
 - import_playbook: "provision-emacs.yaml"
 - import_playbook: "provision-prometheus.yaml"
