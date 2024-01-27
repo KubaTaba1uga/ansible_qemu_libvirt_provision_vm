@@ -8,6 +8,7 @@
       content: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
       
   - name: Run the equivalent of "apt-get update".
+    become: yes
     ansible.builtin.apt:
       update_cache: yes
           
