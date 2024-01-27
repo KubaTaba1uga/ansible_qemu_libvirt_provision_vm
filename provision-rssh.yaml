@@ -47,18 +47,19 @@
         src: templates/sudo.pam
         dest: /etc/pam.d/sudo
       become: yes
-
-#      lineinfile:
-#        line: "auth sufficient libpam_rssh.so"
-#        insertbefore: "@include common-auth"
-#        path: /etc/pam.d/sudo
-
-    - name: Ensure sudo is configured.
+      
+    - name: Ensure sudo timeout is configured.
+      lineinfile:
+        line: Defaults        env_reset,timestamp_timeout=0
+        path: /etc/sudoers
+      become: yes
+      
+    - name: Ensure sudo env is configured.
       lineinfile:
         line: Defaults        env_keep += "SSH_AUTH_SOCK"
         path: /etc/sudoers
       become: yes
-
+      
     - name: Ensure there is no cloud init sudo file.
       ansible.builtin.file:
         path: /etc/sudoers.d/90-cloud-init-users

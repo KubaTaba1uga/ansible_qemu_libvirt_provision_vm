@@ -1,0 +1,34 @@
+---
+- hosts: prometheus_servers
+  become: true
+
+  pre_tasks:
+    - include_tasks: "prometheus/set-up-ca-cert.yaml"
+
+  roles:
+    - prometheus.prometheus.prometheus
+    
+  vars:
+    # prep
+    _targets: "{{ groups['all'] | product([':9100']) | map('join') | list }}"
+
+    # prometheus.prometheus.prometheus
+    prometheus_targets:
+      node:
+        - targets: "{{ _targets }}"
+          labels:               
+            env: lab            
+    prometheus_scrape_configs:
+      - job_name: "prometheus"    
+        metrics_path: "/metrics"
+        static_configs:
+          - targets:
+              - "localhost:9090"
+              
+      - job_name: "node-file-servicediscovery"
+        scheme: https
+        file_sd_configs:
+          - files:
+              - "{{ prometheus_config_dir }}/file_sd/node.yml" # This line loads file created from prometheus_targets
+
+- import_playbook: "prometheus/set-up-agents.yaml"

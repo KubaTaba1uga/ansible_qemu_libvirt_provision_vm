@@ -1,0 +1,108 @@
+---
+- name: Configure agents
+  block:
+    - name: Create the node_exporter group
+      ansible.builtin.group:
+        name: "{{ node_exporter_system_group }}"
+        state: present
+        system: true
+      when: node_exporter_system_group != "root"        
+
+    - name: Create the node_exporter user
+      ansible.builtin.user:
+        name: "{{ node_exporter_system_user }}"
+        groups: "{{ node_exporter_system_group }}"
+        append: true
+        shell: /usr/sbin/nologin
+        system: true
+        create_home: false
+        home: /
+      when: node_exporter_system_user != "root"
+
+    - name: Create node_exporter cert dir
+      file:
+        path: "/etc/node_exporter"
+        state: directory
+        owner: "{{ node_exporter_system_group }}"
+        group: "{{ node_exporter_system_group }}"
+
+    - name: Create CA signed cert
+      block:
+        - name: Check whether certificate exists
+          stat:
+            path: /etc/node_exporter/tls.pem
+          register: certificate_exists
+
+        - name: Check whether private key exists
+          stat:
+            path: /etc/node_exporter/tls.key
+          register: privatekey_exists
+
+        - name: Read existing certificate if exists
+          slurp:
+            src: /etc/node_exporter/tls.pem
+          when: certificate_exists.stat.exists
+          register: certificate
+          no_log: true
+                  
+        - name: Read existing private key if exists
+          slurp:
+            src: /etc/node_exporter/tls.key
+          when: privatekey_exists.stat.exists
+          register: _private_key
+          no_log: true
+
+        - set_fact:
+            private_key: "{{ _private_key.content | b64decode }}"
+          when: _private_key is not skipped
+          no_log: true
+          
+        - name: Generate key and cert
+          delegate_to: "{{ server_name }}"
+          block:
+            - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+              community.crypto.openssl_privatekey_pipe:
+              register: _private_key
+              no_log: true
+              when: _private_key is skipped
+
+            - set_fact:
+                   private_key: "{{ _private_key.privatekey }}"
+              when: _private_key is not skipped
+              no_log: true
+              
+            - name: Create certificate signing request (CSR) for new certificate
+              community.crypto.openssl_csr_pipe:
+                privatekey_content: "{{ private_key }}"
+                subject_alt_name:
+                  - "DNS:{{ inventory_hostname }}"
+                  - "DNS:{{ inventory_hostname }}"
+              no_log: true
+              register: csr
+
+            - name: Sign certificate with our CA
+              community.crypto.x509_certificate_pipe:
+                content: "{{ ( certificate.content | b64decode ) if certificate_exists.stat.exists else omit }}"
+                csr_content: "{{ csr.csr }}"
+                provider: ownca
+                ownca_path: /etc/ssl/certs/ca-prometheus.pem
+                ownca_privatekey_path: /etc/ssl/private/ca-prometheus.key
+              register: certificate
+              no_log: true              
+
+        - name: Create private key for new certificate
+          copy:
+            content: "{{ private_key }}"
+            dest: /etc/node_exporter/tls.key
+            owner: "{{ node_exporter_system_group }}"
+            group: "{{ node_exporter_system_group }}"
+          when: _private_key is changed
+
+        - name: Write certificate file
+          copy:
+            content: "{{ certificate.certificate }}"
+            dest: /etc/node_exporter/tls.pem
+            owner: "{{ node_exporter_system_group }}"
+            group: "{{ node_exporter_system_group }}"         
+          when: certificate is changed
+

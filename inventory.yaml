@@ -1,0 +1,7 @@
+prometheus_servers:
+  hosts:
+    prometheus.lab:
+prometheus_agents:
+  hosts:
+    dev.lab:
+
