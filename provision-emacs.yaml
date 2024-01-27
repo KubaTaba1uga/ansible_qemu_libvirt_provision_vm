@@ -1,0 +1,23 @@
+---
+- hosts: emacs_servers
+  become: yes
+      
+  tasks:
+  - name: Ensure EMACS is installed.
+    package:
+      name: emacs
+      state: present
+
+  - name: Get user's home path.
+    ansible.builtin.user:
+      name: "{{ ansible_user }}"
+      state: present
+    register: user_info
+    check_mode: true  # Important, otherwise user will be created
+
+  - name: Copy EMACS configuration.
+    copy:
+      src: "emacs/.emacs"
+      dest: "{{ user_info.home }}/.emacs"
+
+- import_playbook: "emacs/provision-emacs-dependencies.yaml"

@@ -5,3 +5,7 @@ prometheus_agents:
   hosts:
     dev.lab:
 
+emacs_servers:
+  hosts:
+    dev.lab:
+
