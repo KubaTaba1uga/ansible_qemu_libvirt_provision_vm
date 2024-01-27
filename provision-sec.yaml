@@ -32,4 +32,4 @@
   vars:
     ssh_allow_agent_forwarding: true
     ssh_allow_tcp_forwarding: true
-    ssh_permit_tunnel: all
+    ssh_permit_tunnel: yes
