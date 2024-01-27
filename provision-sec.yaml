@@ -13,3 +13,4 @@
     - devsec.hardening.ssh_hardening   
   vars:
     os_pam_enabled: true
+    ssh_allow_agent_forwarding: true
