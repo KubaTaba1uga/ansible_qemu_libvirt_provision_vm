@@ -5,3 +5,18 @@
     - devsec.hardening.os_hardening
     - devsec.hardening.ssh_hardening
 
+- hosts: all
+  become: yes
+  tasks:
+    - name: Mask gpg-agent
+      command: systemctl --global mask gpg-agent.service gpg-agent.socket gpg-agent-ssh.socket gpg-agent-extra.socket gpg-agent-browser.socket
+
+    - name: Kill gpg-agent
+      command: killall -q gpg-agent
+      ignore_errors: true
+
+    - name: Remove gpg-agent socket
+      file:
+        path: /run/user/1000/gnupg/S.gpg-agent
+        state: absent
+

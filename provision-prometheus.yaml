@@ -7,7 +7,7 @@
 
   roles:
     - prometheus.prometheus.prometheus
-    
+      
   vars:
     # prep
     _targets: "{{ groups['all'] | product([':9100']) | map('join') | list }}"
