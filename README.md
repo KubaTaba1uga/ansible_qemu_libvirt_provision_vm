@@ -1,5 +1,6 @@
 # Install
 
 ```
-ansible-galaxy collection install devsec.hardening prometheus.prometheus
+ansible-galaxy collection install devsec.hardening prometheus.prometheus grafana.grafana
+
 ```

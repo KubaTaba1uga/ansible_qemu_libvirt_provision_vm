@@ -1,0 +1,30 @@
+---
+- hosts: prometheus_servers
+  become: true
+
+  roles:
+    - grafana.grafana.grafana
+
+  vars:
+    grafana_security:
+      admin_user: admin
+      admin_password: "password"
+
+    grafana_datasources:
+      - name: prometheus
+        type: prometheus
+        access: proxy
+        url: 'http://{{ inventory_hostname }}:9090'
+        basicAuth: false
+        isDefault: true
+
+    grafana_dashboards:
+      - dashboard_id: '4271'
+        revision_id: '3'
+        datasource: 'prometheus'
+      - dashboard_id: '1860'
+        revision_id: '4'
+        datasource: 'prometheus'
+      - dashboard_id: '358'
+        revision_id: '1'
+        datasource: 'prometheus'

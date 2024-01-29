@@ -15,6 +15,7 @@
 - import_playbook: "provision-rssh.yaml"
 - import_playbook: "provision-emacs.yaml"
 - import_playbook: "provision-prometheus.yaml"
+- import_playbook: "provision-grafana.yaml"
 - import_playbook: "provision-sec.yaml"
 
 - hosts: all
