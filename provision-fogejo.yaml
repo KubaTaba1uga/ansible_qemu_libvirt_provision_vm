@@ -1,0 +1,11 @@
+- name: "Install gitea"
+  hosts: forgejo_servers
+  roles:
+    - {role: l3d.gitea, tags: gitea}
+  vars:
+    gitea_fork:	forgejo
+    gitea_fqdn: "{{ inventory_hostname }}"
+    gitea_http_listen: '0.0.0.0'
+    gitea_protocol: http
+    gitea_start_ssh: true
+    gitea_disable_http_git: true
