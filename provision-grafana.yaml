@@ -19,12 +19,9 @@
         isDefault: true
 
     grafana_dashboards:
-      - dashboard_id: '4271'
-        revision_id: '3'
-        datasource: 'prometheus'
       - dashboard_id: '1860'
-        revision_id: '4'
+        revision_id: '33'
         datasource: 'prometheus'
-      - dashboard_id: '358'
-        revision_id: '1'
+      - dashboard_id: '3662'
+        revision_id: '2'
         datasource: 'prometheus'
