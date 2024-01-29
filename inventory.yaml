@@ -10,3 +10,7 @@ emacs_servers:
   hosts:
     test-1.lab:
 
+forgejo_servers:
+  hosts:
+    test-2.lab:
+     
