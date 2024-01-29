@@ -1,6 +1,7 @@
 prometheus_servers:
   hosts:
     test-0.lab:
+    
 prometheus_agents:
   hosts:
     test-1.lab:
