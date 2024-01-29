@@ -1,7 +1,7 @@
 - name: "Install gitea"
   hosts: forgejo_servers
   roles:
-    - {role: l3d.gitea, tags: gitea}
+   - {role: l3d.git.gitea, tags: forgejo}
   vars:
     gitea_fork:	forgejo
     gitea_fqdn: "{{ inventory_hostname }}"

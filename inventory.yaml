@@ -1,17 +1,17 @@
 prometheus_servers:
   hosts:
-    test-0.lab:
+    prometheus.lab:
     
 prometheus_agents:
   hosts:
-    test-1.lab:
-    test-2.lab:
+    emacs.lab:
+    forgejo.lab:
 
 emacs_servers:
   hosts:
-    test-1.lab:
+    emacs.lab:
 
 forgejo_servers:
   hosts:
-    test-2.lab:
+    forgejo.lab:
      
