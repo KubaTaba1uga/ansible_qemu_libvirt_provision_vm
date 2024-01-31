@@ -59,8 +59,20 @@
         name: vscode-langservers-extracted
         global: true
 
-    - name: Ensure JavaScript lsp is installed.
+    - name: Ensure JS lsp dependencies are installed.
+      package:
+        name:
+          - unzip
+        state: present
+
+    - name: Ensure JS lsp is installed.
       command: curl -fsSL https://deno.land/install.sh | sh
+
+    - name: Ensure Old JS lsp is not installed.
+      community.general.npm:
+        name: javascript-language-server
+        global: true
+        state: absent
 
     - name: Ensure Markdown lsp is installed.
       community.general.npm:
