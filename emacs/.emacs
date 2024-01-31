@@ -40,7 +40,7 @@
 
 
 (setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp
-    projectile hydra flycheck company which-key dap-mode lsp-ui yascroll))
+    projectile hydra flycheck company which-key dap-mode lsp-ui yascroll yaml-mode))
 
 (when (cl-find-if-not #'package-installed-p package-selected-packages)
   (package-refresh-contents)
