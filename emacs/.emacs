@@ -271,3 +271,27 @@
 (add-hook 'c-mode-hook #'lsp-c-install-save-hooks)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;; configure YAML ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'lsp-mode)
+(add-hook 'yaml-mode-hook #'lsp-deferred)
+
+(defun lsp-yaml-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  )
+
+(add-hook 'yaml-mode-hook #'lsp-yaml-install-save-hooks)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;; configure JAVASCRIPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'lsp-mode)
+(add-hook 'javascript-mode-hook #'lsp-deferred)
+
+(defun lsp-javascript-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  )
+
+(add-hook 'javascript-mode-hook #'lsp-javascript-install-save-hooks)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
