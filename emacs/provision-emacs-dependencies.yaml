@@ -54,5 +54,38 @@
       name: '@ansible/ansible-language-server'
       global: true
 
+  - name: Ensure HTML lsp is installed.
+    community.general.npm:
+      name: vscode-langservers-extracted
+      global: true
+
+  - name: Ensure JavaScript lsp is installed.
+    community.general.npm:
+      name: javascript-typescript-langserver
+      global: true
+
+  - name: Ensure Markdown lsp is installed.
+    community.general.npm:
+      name: unified-language-server
+      global: true
+
+  - name: Ensure BASH lsp is installed.
+    community.general.npm:
+      name: bash-language-server
+      global: true
+
+  - name: Ensure Dockerfile lsp is installed.
+    community.general.npm:
+      name: dockerfile-language-server-nodejs
+      global: true
+
+
+
+
+
+
+
+
+
 
 
