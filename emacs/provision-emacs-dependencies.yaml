@@ -41,3 +41,12 @@
       name: bear
       state: present
 
+  - name: Ensure NPM is installed.
+    comand: apt-get install npm --no-install-suggests --no-install-recommends -y
+
+  - name: Ensure YAML lsp is installed.
+    community.general.npm:
+      name: yaml-language-server
+      global: true
+
+
