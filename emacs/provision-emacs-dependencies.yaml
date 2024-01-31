@@ -66,11 +66,11 @@
         state: present
 
     - name: Ensure JS lsp is installed.
-      command: curl -fsSL https://deno.land/install.sh | sh
+      shell: "curl -fsSL https://deno.land/install.sh | sh"
 
     - name: Ensure Old JS lsp is not installed.
       community.general.npm:
-        name: javascript-language-server
+        name: javascript-typescript-langserver
         global: true
         state: absent
 
