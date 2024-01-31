@@ -4,88 +4,75 @@
 
   vars:
     - venv: /usr/bin/.emacs.venv
-      
+
   tasks:
-  - name: Ensure virtualenv is installed.
-    package:
-      name: virtualenv
-      state: present
-      
-  - name: Ensure LSP server is installed.
-    pip:
-      name: python-lsp-server[all]
-      virtualenv: "{{ venv }}"
-      
-  - name: Ensure LSP Python plugins are installed.
-    pip:
-      name:
-        - python-lsp-black
-        - python-lsp-ruff
-        - python-lsp-isort
-        - black
-        - ruff
-        - isort
-      virtualenv: "{{ venv }}"
+    - name: Ensure virtualenv is installed.
+      package:
+        name: virtualenv
+        state: present
 
-  # Required for C lsp
-  - name: Ensure Clang 15 is installed.
-    package:
-      name: clangd-15
-      state: present
+    - name: Ensure LSP server is installed.
+      pip:
+        name: python-lsp-server[all]
+        virtualenv: "{{ venv }}"
 
-  # Required for C project command generation
-  # example:
-  #  https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/#project-setup
-  - name: Ensure Bear is installed.
-    package:
-      name: bear
-      state: present
+    - name: Ensure LSP Python plugins are installed.
+      pip:
+        name:
+          - python-lsp-black
+          - python-lsp-ruff
+          - python-lsp-isort
+          - black
+          - ruff
+          - isort
+        virtualenv: "{{ venv }}"
 
-  - name: Ensure NPM is installed.
-    command: apt-get install npm --no-install-suggests --no-install-recommends -y
+    # Required for C lsp
+    - name: Ensure Clang 15 is installed.
+      package:
+        name: clangd-15
+        state: present
 
-  - name: Ensure YAML lsp is installed.
-    community.general.npm:
-      name: yaml-language-server
-      global: true
+    # Required for C project command generation
+    # example:
+    #  https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/#project-setup
+    - name: Ensure Bear is installed.
+      package:
+        name: bear
+        state: present
 
-  - name: Ensure Ansible lsp is installed.
-    community.general.npm:
-      name: '@ansible/ansible-language-server'
-      global: true
+    - name: Ensure NPM is installed.
+      command: apt-get install npm --no-install-suggests --no-install-recommends -y
 
-  - name: Ensure HTML lsp is installed.
-    community.general.npm:
-      name: vscode-langservers-extracted
-      global: true
+    - name: Ensure YAML lsp is installed.
+      community.general.npm:
+        name: yaml-language-server
+        global: true
 
-  - name: Ensure JavaScript lsp is installed.
-    community.general.npm:
-      name: javascript-typescript-langserver
-      global: true
+    - name: Ensure Ansible lsp is installed.
+      community.general.npm:
+        name: "@ansible/ansible-language-server"
+        global: true
 
-  - name: Ensure Markdown lsp is installed.
-    community.general.npm:
-      name: unified-language-server
-      global: true
+    - name: Ensure HTML lsp is installed.
+      community.general.npm:
+        name: vscode-langservers-extracted
+        global: true
 
-  - name: Ensure BASH lsp is installed.
-    community.general.npm:
-      name: bash-language-server
-      global: true
+    - name: Ensure JavaScript lsp is installed.
+      command: curl -fsSL https://deno.land/install.sh | sh
 
-  - name: Ensure Dockerfile lsp is installed.
-    community.general.npm:
-      name: dockerfile-language-server-nodejs
-      global: true
+    - name: Ensure Markdown lsp is installed.
+      community.general.npm:
+        name: unified-language-server
+        global: true
 
+    - name: Ensure BASH lsp is installed.
+      community.general.npm:
+        name: bash-language-server
+        global: true
 
-
-
-
-
-
-
-
-
-
+    - name: Ensure Dockerfile lsp is installed.
+      community.general.npm:
+        name: dockerfile-language-server-nodejs
+        global: true

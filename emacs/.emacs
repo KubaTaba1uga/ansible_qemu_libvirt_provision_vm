@@ -301,15 +301,15 @@
 (add-hook 'css-mode-hook #'lsp-css-install-save-hooks)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;; configure JAVASCRIPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;; configure JS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'lsp-mode)
-(add-hook 'javascript-mode-hook #'lsp-deferred)
+(add-hook 'js-mode-hook #'lsp-deferred)
 
-(defun lsp-javascript-install-save-hooks ()
+(defun lsp-js-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   )
 
-(add-hook 'javascript-mode-hook #'lsp-javascript-install-save-hooks)
+(add-hook 'js-mode-hook #'lsp-js-install-save-hooks)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;; configure MARKDOWN ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
