@@ -1,11 +1,12 @@
 prometheus_servers:
   hosts:
     prometheus.lab:
-    
+
 prometheus_agents:
   hosts:
     emacs.lab:
     forgejo.lab:
+    mindmade.lab:
 
 emacs_servers:
   hosts:
@@ -14,4 +15,3 @@ emacs_servers:
 forgejo_servers:
   hosts:
     forgejo.lab:
-     
